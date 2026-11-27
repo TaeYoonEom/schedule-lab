@@ -31,4 +31,17 @@ public class ScheduleService {
         Schedule saved = scheduleRepository.save(schedule);
         return saved.getId();
     }
+
+    @Transactional
+    public boolean updateCompletion(UUID id, boolean completed){
+        Schedule schedule = scheduleRepository.findById(id)
+                .orElse(null);
+
+        if (schedule == null){
+            return false;
+        }
+
+        schedule.changeCompletion(completed);
+        return true;
+    }
 }
