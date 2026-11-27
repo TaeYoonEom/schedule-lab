@@ -48,8 +48,10 @@ public class Schedule {
             String location,
             String memo
     ){
-        if(endTime != null && startTime == null || !endTime.isAfter(startTime)){
-            throw new IllegalArgumentException("종료 시각은 시작 시각보다 늦어야 합니다.");
+        if (endTime != null && (startTime == null || !endTime.isAfter(startTime))) {
+            throw new IllegalArgumentException(
+                    "종료 시각을 입력하려면 시작 시각이 있어야 하고, 종료 시각은 시작 시각보다 늦어야 합니다."
+            );
         }
 
         if((type == ScheduleType.INTERVIEW || type == ScheduleType.APPLICATION_DEADLINE)
