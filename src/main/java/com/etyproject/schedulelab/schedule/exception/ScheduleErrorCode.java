@@ -15,7 +15,10 @@ public enum ScheduleErrorCode implements ErrorCode {
     SCHEDULE_TITLE_REQUIRED(HttpStatus.BAD_REQUEST, ErrorType.VALIDATION, "제목은 필수입니다."),
     SCHEDULE_START_DATE_REQUIRED(HttpStatus.BAD_REQUEST, ErrorType.VALIDATION, "시작 날짜는 필수입니다."),
     SCHEDULE_COMPANY_REQUIRED(HttpStatus.BAD_REQUEST, ErrorType.VALIDATION,"면접과 지원 마감 일정에는 회사명이 필요합니다."),
-    SCHEDULE_INVALID_TIME_RANGE(HttpStatus.BAD_REQUEST, ErrorType.VALIDATION,"종료 시각을 입력하려면 시작 시각이 있어야 하고, 종료 시각은 시작 시각보다 늦어야 합니다.");
+    SCHEDULE_INVALID_TIME_RANGE(HttpStatus.BAD_REQUEST, ErrorType.VALIDATION,"종료 시각을 입력하려면 시작 시각이 있어야 하고, 종료 시각은 시작 시각보다 늦어야 합니다."),
+    SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorType.NOT_FOUND, "일정을 찾을 수 없습니다.");
+
+    ;
 
     private final HttpStatus status;
     private final ErrorType type;

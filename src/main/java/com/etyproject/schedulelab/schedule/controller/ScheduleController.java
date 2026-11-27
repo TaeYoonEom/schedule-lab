@@ -34,15 +34,7 @@ public class ScheduleController {
             @PathVariable("id") UUID id,
             @Valid @RequestBody UpdateScheduleCompletionRequest request
             ) {
-        boolean updated = scheduleService.updateCompletion(
-                id,
-                request.completed()
-        );
-
-        if(!updated){
-            return ResponseEntity.notFound().build();
-        }
-
+        scheduleService.updateCompletion(id, request.completed());
         return ResponseEntity.ok().build();
     }
 }

@@ -1,7 +1,9 @@
 package com.etyproject.schedulelab.schedule.service;
 
+import com.etyproject.schedulelab.common.error.BusinessException;
 import com.etyproject.schedulelab.schedule.domain.Schedule;
 import com.etyproject.schedulelab.schedule.dto.CreateScheduleRequest;
+import com.etyproject.schedulelab.schedule.exception.ScheduleErrorCode;
 import com.etyproject.schedulelab.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,15 +35,10 @@ public class ScheduleService {
     }
 
     @Transactional
-    public boolean updateCompletion(UUID id, boolean completed){
+    public void updateCompletion(UUID id, boolean completed) {
         Schedule schedule = scheduleRepository.findById(id)
-                .orElse(null);
-
-        if (schedule == null){
-            return false;
-        }
+                .orElseThrow(() -> new BusinessException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
 
         schedule.changeCompletion(completed);
-        return true;
     }
 }
