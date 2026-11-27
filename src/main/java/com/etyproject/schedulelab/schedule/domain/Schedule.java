@@ -1,6 +1,8 @@
 package com.etyproject.schedulelab.schedule.domain;
 
+import com.etyproject.schedulelab.common.error.BusinessException;
 import com.etyproject.schedulelab.schedule.domain.enums.ScheduleType;
+import com.etyproject.schedulelab.schedule.exception.ScheduleErrorCode;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -49,14 +51,12 @@ public class Schedule {
             String memo
     ){
         if (endTime != null && (startTime == null || !endTime.isAfter(startTime))) {
-            throw new IllegalArgumentException(
-                    "종료 시각을 입력하려면 시작 시각이 있어야 하고, 종료 시각은 시작 시각보다 늦어야 합니다."
-            );
+            throw new BusinessException(ScheduleErrorCode.SCHEDULE_INVALID_TIME_RANGE);
         }
 
         if((type == ScheduleType.INTERVIEW || type == ScheduleType.APPLICATION_DEADLINE)
         && (companyName == null || companyName.isBlank())){
-            throw new IllegalArgumentException("면접과 지원 마감 일정에는 회사 명이 필요합니다.");
+            throw new BusinessException(ScheduleErrorCode.SCHEDULE_COMPANY_REQUIRED);
         }
 
         this.type = type;
