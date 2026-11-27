@@ -3,6 +3,7 @@ package com.etyproject.schedulelab.schedule.domain;
 import com.etyproject.schedulelab.schedule.domain.enums.ScheduleType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "schedules")
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Schedule {
     @Id
