@@ -1,5 +1,6 @@
 package com.etyproject.schedulelab.schedule.controller;
 
+import com.etyproject.schedulelab.common.response.ApiResponse;
 import com.etyproject.schedulelab.schedule.domain.Schedule;
 import com.etyproject.schedulelab.schedule.dto.CreateScheduleRequest;
 import com.etyproject.schedulelab.schedule.dto.CreateScheduleResponse;
@@ -25,8 +26,10 @@ public class ScheduleController {
     ){
         UUID id = scheduleService.create(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new CreateScheduleResponse(id));
+        return ApiResponse.success(
+                HttpStatus.CREATED,
+                new CreateScheduleResponse(id)
+        );
     }
 
     @PatchMapping("/{id}/completion")
@@ -35,6 +38,6 @@ public class ScheduleController {
             @Valid @RequestBody UpdateScheduleCompletionRequest request
             ) {
         scheduleService.updateCompletion(id, request.completed());
-        return ResponseEntity.ok().build();
+        return ApiResponse.success(HttpStatus.OK);
     }
 }

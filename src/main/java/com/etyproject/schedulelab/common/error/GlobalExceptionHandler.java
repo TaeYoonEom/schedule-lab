@@ -1,5 +1,6 @@
 package com.etyproject.schedulelab.common.error;
 
+import com.etyproject.schedulelab.common.response.ApiResponse;
 import com.etyproject.schedulelab.schedule.exception.ScheduleErrorCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -24,22 +25,13 @@ public class GlobalExceptionHandler {
             default -> ScheduleErrorCode.INVALID_SCHEDULE_REQUEST;
         };
 
-        return buildResponse(errorCode);
+        return ApiResponse.error(errorCode);
     }
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiErrorResponse> handleBusinessException(
             BusinessException exception
     ) {
-        return buildResponse(exception.getErrorCode());
-    }
-
-    private ResponseEntity<ApiErrorResponse> buildResponse(ErrorCode errorCode) {
-        return ResponseEntity.status(errorCode.getStatus())
-                .body(new ApiErrorResponse(
-                        errorCode.name(),
-                        errorCode.getType(),
-                        errorCode.getMessage()
-                ));
+        return ApiResponse.error(exception.getErrorCode());
     }
 }
