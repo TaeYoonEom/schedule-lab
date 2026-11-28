@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -36,9 +37,16 @@ public class ScheduleService {
 
     @Transactional
     public void updateCompletion(UUID id, boolean completed) {
-        Schedule schedule = scheduleRepository.findById(id)
+        Schedule schedule = scheduleRepository.findByIdAndDeletedAtIsNull(id)
                 .orElseThrow(() -> new BusinessException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
 
         schedule.changeCompletion(completed);
+    }
+
+    @Transactional
+    public void deleteSchedule(UUID id) {
+        Schedule schedule = scheduleRepository.findByIdAndDeletedAtIsNull(id)
+                .orElseThrow(() -> new BusinessException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
+        schedule.markDeleted(Instant.now());
     }
 }

@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
@@ -40,6 +41,9 @@ public class Schedule {
     @Column(nullable = false)
     private boolean completed;
 
+    @Column(name = "deleted_at")
+    private Instant deletedAt;
+
     public Schedule(
             ScheduleType type,
             String title,
@@ -71,5 +75,9 @@ public class Schedule {
 
     public void changeCompletion(boolean completed){
         this.completed = completed;
+    }
+
+    public void markDeleted(Instant deletedAt){
+        this.deletedAt = deletedAt;
     }
 }
