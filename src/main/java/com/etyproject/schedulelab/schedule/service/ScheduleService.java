@@ -36,7 +36,7 @@ public class ScheduleService {
 
     @Transactional
     public void updateCompletion(UUID id, boolean completed) {
-        Schedule schedule = scheduleRepository.findById(id)
+        Schedule schedule = scheduleRepository.findByIdAndDeletedAtIsNull(id)
                 .orElseThrow(() -> new BusinessException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
 
         schedule.changeCompletion(completed);
