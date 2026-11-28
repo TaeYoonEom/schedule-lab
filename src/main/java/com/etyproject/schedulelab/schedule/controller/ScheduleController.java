@@ -40,4 +40,12 @@ public class ScheduleController {
         scheduleService.updateCompletion(id, request.completed());
         return ApiResponse.success(HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSchedule(
+            @PathVariable("id") UUID id
+    ) {
+        scheduleService.deleteSchedule(id);
+        return ApiResponse.success(HttpStatus.NO_CONTENT);
+    }
 }
